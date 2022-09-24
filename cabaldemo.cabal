@@ -53,12 +53,12 @@ extra-doc-files:    CHANGELOG.md
 common common-all
     build-depends:
         base ^>=4.17.0.0,
-        deepseq >= 1.4.4.0,
-        QuickCheck >= 2.0,
-        cabal-test-quickcheck >= 0.1,
-        Cabal >= 3.0.1.0
     ghc-options:      -Wall
     default-language: Haskell2010
+
+common test-depends
+  build-depends:       hspec ^>= 2.10.6
+  build-tool-depends:  hspec-discover:hspec-discover
 
 library
     import:           common-all
@@ -78,9 +78,11 @@ executable cabaldemo2
     hs-source-dirs:   app, src
     ghc-options:      -main-is Another
 
-Test-Suite my-tests
-    import:           common-all
-    type:             detailed-0.9
+test-suite my-tests
+    import:           common-all, test-depends
+    type:             exitcode-stdio-1.0
     hs-source-dirs:   src, test
+    main-is:          Spec.hs
     test-module:      Test
-    other-modules:    Lib
+    other-modules:    Lib, MyLibSpec
+    build-depends:    cabaldemo

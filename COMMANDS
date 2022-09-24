@@ -29,3 +29,16 @@ base-4.2.0.0, base-4.1.0.0, base-4.0.0.0, base-3.0.3.2, base-3.0.3.1
 After searching the rest of the dependency tree exhaustively, these were the
 goals I've had most trouble fulfilling: base, QuickCheck,
 cabal-test-quickcheck, cabaldemo
+
+$ cabal test my-tests
+Error: cabal: Cannot test the test suite 'my-tests' because the solver did not
+find a plan that included the test suites for cabaldemo-0.1.0.0. It is
+probably worth trying again with test suites explicitly enabled in the
+configuration in the cabal.project{.local} file. This will ask the solver to
+find a plan with the test suites available. It will either fail with an
+explanation or find a different plan that uses different versions of some
+other packages. Use the '--dry-run' flag to see package versions and check
+that you are happy with the choices.
+
+$ cabal configure --enable-tests
+$ cabal test my-tests
